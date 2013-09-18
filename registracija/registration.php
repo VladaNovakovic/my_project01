@@ -2,18 +2,30 @@
 	require "../path.php";
 	require "$TRAZI_FILE$MASTER";
 
-	echo top("Registration page");
-	echo registracijaForma();
+	echo top("Registracija");
+	
+	$regEmail = "";
+	$regUsername = "";
+	
+	if(isset($_SESSION['username']))
+	{
+		echo "<h1>registrovani ste!<h1/>";
+	}
+	else 
+	{
+		if(isset($_SESSION['regEmail']) && isset($_SESSION['regUsername']))
+		{	
+			$regEmail = $_SESSION['regEmail'];
+			$regUsername = $_SESSION['regUsername'];
+			//echo registracijaForma($_SESSION['regUsername'], $_SESSION['regEmail']);
+		}
+		
+		echo registracijaForma($regUsername, $regEmail);
+	}
 	echo bottom();
 	
-function registracijaForma()
+function registracijaForma($username="", $email="")
 {
-	$username="";
-	$email="";
-	/*if(isset($_POST['Proveri']))
-	{
-		proveri();
-	}*/
 	if(isset($_POST['submit']) && isset($_POST['email']) && isset($_POST['username']))
 	{
 		$email=$_POST['email'];

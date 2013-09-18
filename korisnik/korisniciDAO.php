@@ -7,6 +7,8 @@
 	
 	function vratiKorisnik($username)
 	{
+		$username = obradiString($username); 
+		
 		$tabela = "korisnici";
 		$kolone = "id_user, username, password, level, ban, ban_date";
 		$uslov = "username LIKE '$username'";
@@ -129,39 +131,7 @@
 		}
 		
 	}
-	/*
-			rad sa datumima
-			
-			//zeljeni format za prikaz
-			$vreme1 = date("d.m.Y H:i ", $datetime);
-			//format za upis u bazu
-			$vreme2 = date('Y-m-d H:i:s', $datetime);
-			
-			//tacno vreme
-			$tacnoVreme = time() + (2 * 60 * 60);
-			//next week
-			$nextWeek = time() + (2 * 60 * 60) + (7 * 24 * 60 * 60);
-			//next month
-			$nextMonth = time() + (2 * 60 * 60) + ( 30 * 24 * 60 * 60);
-			//tacno vreme u pravom formatu
-			$vreme3 = date('Y-m-d H:i:s', $tacnoVreme);
-			
-			$sada =  time() + (2 * 60 * 60);
-			$zaDvaSata =  time();
-			$prvi = date('Y-m-d H:i:s', $sada);
-			$drugi = date('Y-m-d H:i:s', $zaDvaSata);
-			
-			if($prvi>$drugi)
-			{
-				$vreme = "prvi veci od drugog";
-			}
-			else if($prvi<$drugi)
-			{
-				$vreme = "prvi manji od drugog";
-			}
-			else $vreme = "jednaki su!";
-			
-	*/
+	
 	function banujKorisnika($id_user, $ban)
 	{
 		$tabela = "korisnici";
@@ -193,6 +163,8 @@
 	
 	function checkUsername($username)
 	{
+		$username = obradiString($username); 
+		
 		$tabela = "korisnici";
 		$kolone = "*";
 		$uslov = "username LIKE '$username'";
@@ -210,6 +182,8 @@
 	}
 	function checkEmail($email)
 	{
+		$email = obradiString($username);
+		
 		$tabela = "korisnici";
 		$kolone = "*";
 		$uslov = "email LIKE '$email'";
@@ -227,6 +201,9 @@
 	}
 	function registruj($username, $email, $password)
 	{
+		$username = obradiString($username); 
+		$email = obradiString($username);
+		
 		$tabela= "korisnici";
 		$kolone= "username, email, password, level, ban";
 		$vrednosti= "'$username', '$email', '$password', '1', 'false'";
@@ -260,71 +237,5 @@
 		}
 	}
 	
-	function brisKomentareClanka($clanak)
-	{
-		$tabela="komentari";
-		$uslov="clanak_id = ".$clanak;
-		if(brisi($tabela, $uslov))
-		{
-			echo "<p>Brisanje zapisa je uspešno!</p>";
-		}
-		else
-		{
-			echo "<p>Nastala je greska pri brisanju iz baze</p>";	
-		}
-	}
-	
-	function prikaz($id_Clanak)
-	{
-		$tabela = "komentari";
-		$kolone = "Autor, Sadrzaj, Vreme, id_comment";
-		$uslov = "Clanak_id=$id_Clanak";
-		$redosled = "id_comment DESC";
-		
-		$q = vratiRedove($tabela, $kolone, $uslov, $redosled);
-		if(!$q)
-		{
-			echo "<p>Nastala je greska pri citanju iz baze</p>";
-			return false;
-		}
-		else if($q)
-		{
-			return $q;
-		}
-		if($q==0)
-		{
-			echo "<p>nema trazenog sadrzaja</p>";
-			return false;
-		}
-	}
 	*/
-	
-	/*
-	function izmena($id)
-	{
-		if (isset ($_POST['Autor']) && isset ($_POST['Sadrzaj']))
-			{
-				$Autor = $_POST['Autor'];
-				$Sadrzaj = $_POST['Sadrzaj'];
-				
-				$tabela = "komentari";
-				$vrednost = "Autor='".$Autor."',Sadrzaj='".$Sadrzaj."'";
-				$uslov= "id_comment=".$id;
-				
-				if(!$q=editovanje($tabela, $vrednost, $uslov))
-				{
-					echo "<p>Nastala je greška pri izmeni Komentara</p>";
-					return false;
-				}
-				else
-				{
-					echo $q;
-					return true;
-				}
-			} else 
-			{
-				echo "<p>Nisu prosleđeni parametri za izmenu";
-				return false;
-			}
-	}*/
 ?>

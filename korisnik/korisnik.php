@@ -20,9 +20,7 @@
 		else 
 		{
 			$red = $q->fetch_object();
-			//$user_id=$red->id_user;
 			$username=$red->username;
-			//echo $username;
 			$email=$red->email;
 			$level=$red->level;
 			$reg_date=$red->reg_date;

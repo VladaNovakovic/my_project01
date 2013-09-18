@@ -119,7 +119,8 @@
 	//obrada parametra za zastitu od sql injection
 	function obradiString($string)
 	{
-		$rezultat=$this->mysqli->real_escape_string($string);
+		global $mysqli;
+		$rezultat=$mysqli->real_escape_string($string);
 		return $rezultat;
 	}
 ?>

@@ -10,12 +10,13 @@
 		{	
 			global $mysqli;
 			
-			$autor = $_POST['autor'];
-			$id_autor = $_POST['id_autor'];
-			$sadrzaj = $_POST['sadrzaj'];
+			//sql injection
+			$autor = obradiString($_POST['autor']);
+			$id_autor = obradiString($_POST['id_autor']);
+			$sadrzaj = obradiString($_POST['sadrzaj']);
 			
 			//sql injection zastita
-			$sadrzaj = $mysqli->real_escape_string($sadrzaj);
+			//$sadrzaj = $mysqli->real_escape_string($sadrzaj);
 		
 			$tabela= "komentari";
 			$kolone= "autor_id, Autor, Sadrzaj, Clanak_id";
@@ -46,7 +47,7 @@
 		
 		if(brisi($tabela, $uslov))
 		{
-			$brisi = "<p>Brisanje zapisa je uspešno!</p>";
+			$brisi = "<p>Brisanje komentara je uspešno!</p>";
 			//return true;
 		}
 		else
@@ -59,17 +60,19 @@
 	
 	function brisKomentareClanka($clanak)
 	{
+		$brisi = "";
 		
 		$tabela="komentari";
 		$uslov="clanak_id = ".$clanak;
 		if(brisi($tabela, $uslov))
 		{
-			echo "<p>Brisanje zapisa je uspešno!</p>";
+			$brisi = "<p>Brisanje svih komentara za clanak_id =".$clanak." je uspešno!</p>";
 		}
 		else
 		{
-			echo "<p>Nastala je greska pri brisanju iz baze</p>";	
+			$brisi = "<p>Nastala je greska pri brisanju iz baze</p>";	
 		}
+		return $brisi;
 	}
 	function prikazKomentara($id_Clanak)
 	{
@@ -123,11 +126,11 @@
 		$izmena = "";
 		if (isset ($_POST['sadrzaj']))
 			{
-				
-				$Sadrzaj = $_POST['sadrzaj'];
+				//sql injection
+				$Sadrzaj = obradiString($_POST['sadrzaj']);
 				
 				//sql injection zastita
-				$Sadrzaj = $mysqli->real_escape_string($sadrzaj);
+				//$Sadrzaj = $mysqli->real_escape_string($sadrzaj);
 				
 				$tabela = "komentari";
 				$vrednost = "Sadrzaj='".$Sadrzaj."'";

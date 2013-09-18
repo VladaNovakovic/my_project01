@@ -6,11 +6,13 @@
 	{
 		if (isset($_POST['sacuvaj']) && !empty($_POST['naslov']) && !empty($_POST['opis']) && !empty($_POST['text']) && isset($_POST['autor']) && isset($_POST['autor_id']))
 		{
-			$naslov = $_POST['naslov'];
-			$opis = $_POST['opis'];
-			$text = $_POST['text'];
-			$autor = $_POST['autor'];
-			$autor_id = $_POST['autor_id'];
+			//sql injection
+			$naslov = obradiString($_POST['naslov']);
+			$opis = obradiString($_POST['opis']);
+			$text = obradiString($_POST['text']);
+			$autor = obradiString($_POST['autor']);
+			$autor_id = obradiString($_POST['autor_id']);
+			
 			
 			
 			$tabela= "clanci";
@@ -25,14 +27,15 @@
 			else 
 			{
 				//echo "<p>Nastala je greška pri ubacivanju u bazu</p>";
-				return false;
+				//return false;
+				return "greska"; //ovde bi moglo da bude izuzetak
 			}
 			
 		}
 		else 
 		{
 			//echo "nisu prosledjeni parametri";
-			echo "<script>alert('nisu prosledjeni parametri');</script>";
+			//echo "<script>alert('nisu prosledjeni parametri');</script>";
 			return false;
 		}
 	}
@@ -44,16 +47,16 @@
 		
 		if(brisi($tabela, $uslov))
 		{
-			echo "<p>Brisanje zapisa je uspešno!</p>";
+			echo "<p>Brisanje clanka je uspešno!</p>";
+			global $KOMENTARI_FUNKCIJE;
+			global $TRAZI_FILE;
+			require_once "$TRAZI_FILE$KOMENTARI_FUNKCIJE";
+			echo brisKomentareClanka($id);
 		}
 		else
 		{
 			echo "<p>Nastala je greska pri brisanju iz baze</p>";	
 		}
-		global $KOMENTARI_FUNKCIJE;
-		global $TRAZI_FILE;
-		require_once "$TRAZI_FILE$KOMENTARI_FUNKCIJE";
-		brisKomentareClanka($id);
 	}
 	
 	function listajClanke()
@@ -90,7 +93,6 @@
 		$q = vratiRedove($tabela, $kolone, $uslov, $redosled);
 		if(!$q)
 		{
-			echo "<p>Nastala je greska pri citanju iz baze</p>";
 			return false;
 		}
 		else
@@ -155,11 +157,11 @@ CLANAK;
 	{
 		if (!empty($_POST['naslov']) && !empty($_POST['opis']) && !empty($_POST['text'])/* && isset($_POST['autor']) && isset($_POST['autor_id']) ovaj deo dodati kad budem dodavao edited by...*/)
 		{
-			$naslov = $_POST['naslov'];
-			$opis = $_POST['opis'];
-			$text = $_POST['text'];
-			//$autor = $_POST['Autor'];
-			//$autor_id = $_POST['Autor_id'];
+			//sql injection
+			$naslov = obradiString($_POST['naslov']);
+			$opis = obradiString($_POST['opis']);
+			$text = obradiString($_POST['text']);
+			
 			
 			
 			$tabela = "clanci";

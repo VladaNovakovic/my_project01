@@ -11,51 +11,6 @@
 	define("HASH_PBKDF2_INDEX", 3);
 
 /*
-	echo '
-	<form method="post"><table>
-		<tr>
-			<td>username : </td>
-			<td><input type="textarea" name="username" ></td>
-		</tr>
-		<tr>
-			<td>Password : </td>
-			<td><input type="password" name="password" ></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><input type="submit" name="submit" value="Login" ></td>
-		</tr>
-	</table></form>
-	';
-	
-	if(isset($_POST['submit']) && !empty($_POST['username']) && !empty($_POST['password']))
-	{
-		$password = $_POST['password'];
-		$username = $_POST['username'];
-		echo $username;
-		echo "<br/>";
-		echo $password;
-		echo "<br/>";
-		
-		$unetaSifra = $password;
-		$pravaSifra = "vlada";
-		
-		
-		echo "<h1>DA VIDIMO STA SADA RADI?!</h1>";
-		
-		if(validate_password($unetaSifra, create_hash($pravaSifra)))
-		{
-			echo "<h1>logovani ste</h1>";
-			echo "<br/>";
-		}
-		else
-		{
-			echo "<h1>pogresna sifra</h1>";
-			echo "<br/>";
-		}
-	}
-	*/
-/*
  * Password hashing with PBKDF2.
  * Author: havoc AT defuse.ca
  * www: https://defuse.ca/php-pbkdf2.htm

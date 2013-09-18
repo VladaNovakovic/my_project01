@@ -90,9 +90,7 @@
 CLANAK;
 		
 		global $dozvola;
-		//echo $dozvola;
 		
-		//global $CLANAK_OBRADA_LINK;
 		global $CLANAK_OBRADA;
 		global $TRAZI_LINK;
 		$kontrola="";

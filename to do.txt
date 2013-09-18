@@ -1,22 +1,44 @@
-uraditi
-- srediti kod (komentari su prilicno sredjeni)
+============================= legend=======================================
+* - nisam siguran da li je zavrseno ili nije zavrseno, nesto je sigurno odradjeno
+- - nije uradjeno/zavrseno
++ - zavrseno
+
+===========================================================================
+============================ uraditi ======================================
+===========================================================================
+
+- pm
 - json
-- sql injection (uradjena za unos i izmenu komentara) - ostaje za unos i izmenu vesti, za logovanje i registrovanje
 - prebaciti u objektno
 - paginacija za komentare i clanke (verovatno bi moglo neki jquery)
+- cuvanje u kukiju da li se komentari prikazuju od prvog ili od najnovijeg 
 - dodati edited by
 - promenljive u path.php prepraviti u koonstante, (prblem: require ? require_once) 
 
-donekle uradjeno
-* provera prava pristupa nekim stranicama (na nekim uradjeno... videcu kasnije dalje...)
-* srediti broker da ne stampa nista osim greske - ostalo je samo na jos dva mesta da se vracaju poruke...
-* admin stranica
+===========================================================================
+======================= donekle uradjeno ==================================
+===========================================================================
 
-uradjeno
-- enkripcija sifre
-- automatski uzima autora vesti iz sesije (link sa id-om)
-- automatski uzima autora komentara iz sesije (link sa id-om)
-- posle logina vraca na stranicu odakle je krenuo
-- izbaciti cuvanje passworda u sesiji pri loginovanju
-- ubaciti cuvanje id-a u sesiji
-- automatska provera da li je banovan, i ako je ban istekao, skida ga
+
+===========================================================================
+============================ uradjeno =====================================
+===========================================================================
+
+* provera prava pristupa nekim stranicama (mozda mi se provuklo na nekim)
+* sql injection (mostly done)
+* admin stranica (za sada ima dovoljno stvari)
+* srediti kod (manje vise su sredjeni, mozda jos DAO fajlove malo da sredim, i dalje ima mnogo nezeljenog stampanja)
++ srediti broker da ne stampa nista osim greske - ostalo je samo na jos dva mesta da se vracaju poruke...
++ u clanak rad.php dodati funkciju koja vraca naslov stranice u zavisnosti od akcije...
++ enkripcija sifre
++ automatski uzima autora vesti iz sesije (link sa id-om)
++ automatski uzima autora komentara iz sesije (link sa id-om)
++ posle logina vraca na stranicu odakle je krenuo
++ izbaciti cuvanje passworda u sesiji pri loginovanju
++ ubaciti cuvanje id-a u sesiji
++ automatska provera da li je banovan, i ako je ban istekao, skida ga
+
+===========================================================================
+===========================================================================
+===========================================================================
+

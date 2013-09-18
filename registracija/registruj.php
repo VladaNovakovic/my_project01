@@ -1,14 +1,16 @@
 <?php
-	//include "korisniciDAO.php";
 	require "../path.php";
 	require "$TRAZI_FILE$MASTER";
 	
 	echo top("Registrating...");
-	registracijaObrada();
+	echo registracijaObrada();
 	echo bottom();
 	
-	function registracijaObrada()
+
+function registracijaObrada()
 {
+	$registracija = "";
+
 	global $TRAZI_FILE;
 	global $KORISNIK_FUNKCIJE;
 	global $HASH;
@@ -34,61 +36,71 @@
 					//dodati proveru za duzinu username-a, minimum 6 ili nesto tako... maximum 16... 
 					if(!checkUsername($username)) 
 					{
-						echo "postoji username<br/>";
+						$registracija = $registracija . "postoji username<br/>";
 					}
-					else echo "dobar username<br/>";
+					else 
+					{
+						$registracija = $registracija . "dobar username<br/>";
+								
+						//ovaj deo treba prebaciti da provereava na registration.php ajaxom
+						if(!checkEmail($email)) 
+						{
+							$registracija = $registracija . "postoji email<br/>";
+						}
+						else 
+						{
+							$registracija = $registracija . "dobar email<br/>";
 							
-					//ovaj deo treba prebaciti da provereava na registration.php ajaxom
-					if(!checkEmail($email)) 
-					{
-						echo "postoji email<br/>";
+							//ovaj deo treba prebaciti da provereava na registration.php ajaxom
+							//minimum duzina, npr 8... maximum duzina 16
+							//12 characters and require at least two letters, two digits, and two symbols
+							if($password==$confirmPass) 
+							{
+								$registracija = $registracija . "sifre su iste<br/>";
+								$passwordHash = create_hash($password);
+								
+								if(registruj($username, $email, $passwordHash))
+								{
+									$registracija = $registracija . "registrovan";
+								}
+								else $registracija = $registracija . "nije uspesno registrovan";
+							}
+							else $registracija = $registracija . "sifre se razlikuju<br/>";
+						}
 					}
-					else echo "dobar email<br/>";
 					
-					//ovaj deo treba prebaciti da provereava na registration.php ajaxom
-					//minimum duzina, npr 8... maximum duzina 16
-					//12 characters and require at least two letters, two digits, and two symbols
-					if($password==$confirmPass) 
-					{
-						echo "sifre su iste<br/>";
-						$passwordHash = create_hash($password);
-					}
-					else echo "sifre se razlikuju<br/>";
-					
-					//echo $username."<br/>".$email."<br/>".$passwordHash."<br/>".$confirmPass."<br/>";
-					
-					if(registruj($username, $email, $passwordHash))
-					{
-						echo "registrovan";
-					}
-					else echo "nije uspesno registrovan";
-					
-					//header( "refresh:2;url=registration.php" );
 				}
+				else 
+				{
+					$registracija = $registracija . "<h1>nisu prosledjeni parametri</h1>";
+				}
+				//vracanje parametara da se popuni forma za registraciju
+				if(isset($_POST['username']))
+					$_SESSION['regUsername']=$_POST['username'];
+				if(isset($_POST['email']))
+					$_SESSION['regEmail'] = $_POST['email'];
+				header("refresh:3; url=$TRAZI_LINK$KORISNIK_REGISTRACIJA");
 				break;
 			case "menjaj_sifru";
 				{
-					echo "parametri : <br/>";
-					//echo $_SESSION['username']."<br/>".$_SESSION['user_id']."<br/>".$_POST['oldPassword']."<br/>".$_POST['newPassword']."<br/>".$_POST['confirmPassword']."<br/>";
-					
 					if(isset($_POST['menjaj']) && !empty($_POST['oldPassword']) && !empty($_POST['newPassword']) && !empty($_POST['confirmPassword']) &&($_POST['newPassword']==$_POST['confirmPassword']) && isset($_SESSION['user_id']) && proveriSifru($_SESSION['user_id'],$_POST['oldPassword']))
 					{
 						$novaSifra = create_hash($_POST['newPassword']);
 						if(menjajSifru($_SESSION['user_id'],$novaSifra))
 						{
-							echo "uspesno promenjena sifra";
+							$registracija = $registracija . "uspesno promenjena sifra";
 						}
-						else echo "greska pri promeni";
+						else $registracija = $registracija . "greska pri promeni";
 					}
-					else echo "greska, ne slazu se svi parametri";
-					
-					//echo "ovde f-ha za proveru sifre npr proveriSifru($_SESSION['id_user'],$_POST['oldPassword'])";
-					
+					else $registracija = $registracija . "<h1>greska, ne slazu se svi parametri ili nisu prosledjeni</h1>";
+					header("refresh:3; url=$TRAZI_LINK$KORISNIK_REGISTRACIJA");
 				}
 				break;
 		}
 	}
-	else echo "<h1>nisu prosledjeni parametri</h1>";
+	else $registracija = $registracija . "<h1>nepoznata akcija</h1>";
+	
+	return $registracija;
 }
 
 ?>
